@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="disease_report"
+             targetRuntime="MyBatis3Simple"
+             defaultModelType="flat">
+
+        <!-- include the plugin -->
+        <plugin type="com.softwareloop.mybatis.generator.plugins.LombokPlugin">
+
+            <!-- enable annotations -->
+            <property name="builder" value="true"/>
+            <!-- annotation's option(boolean) -->
+            <property name="builder.fluent" value="true"/>
+            <!-- annotation's option(String) -->
+            <property name="builder.builderMethodName" value="myBuilder"/>
+
+            <property name="accessors" value="true"/>
+            <!-- annotation's option(array of String) -->
+            <property name="accessors.prefix" value="m_, _"/>
+
+            <!-- disable annotations -->
+            <property name="allArgsConstructor" value="true"/>
+            <property name="noArgsConstructor" value="true"/>
+        </plugin>
+
+        <commentGenerator>
+            <property name="suppressData" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://120.76.60.106:3306/disease_report"
+                        userId="root"
+                        password="123456"/>
+
+        <javaModelGenerator targetPackage="com.example.diseasereport.model" targetProject="src/main/java/"/>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources/"/>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.diseasereport.mapper"
+                             targetProject="src/main/java"/>
+
+        <table tableName="User" domainObjectName="User">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+    </context>
+</generatorConfiguration>
