@@ -14,13 +14,13 @@ import com.example.diseasereport.model.User;
 public interface UserMapper {
     int deleteById(Integer id);
 
-    int insert(User record);
+    int insert(User user);
 
     User selectById(Integer id);
 
     List<User> selectAll();
 
-    int updateById(User record);
+    int updateById(User user);
 
     User selectByEmail(@Param("email") String email);
 }

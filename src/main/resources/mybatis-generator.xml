@@ -44,8 +44,16 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.diseasereport.mapper"
                              targetProject="src/main/java"/>
 
-        <table tableName="User" domainObjectName="User">
-            <property name="useActualColumnNames" value="false"/>
+        <table tableName="UserInfo" domainObjectName="UserInfo">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+
+        <table tableName="Doctor" domainObjectName="Doctor">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+
+        <table tableName="HealthChart" domainObjectName="HealthChart">
+            <property name="useActualColumnNames" value="true"/>
         </table>
 
     </context>

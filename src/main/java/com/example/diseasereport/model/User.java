@@ -2,6 +2,7 @@ package com.example.diseasereport.model;
 
 import java.util.Collection;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
+    @Id
     private Integer id;
 
     private String email;

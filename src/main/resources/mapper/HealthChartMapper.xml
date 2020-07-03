@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.diseasereport.mapper.HealthChartMapper">
+    <resultMap id="BaseResultMap" type="com.example.diseasereport.model.HealthChart">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="userId" jdbcType="INTEGER" property="userId"/>
+        <result column="selfStatus" jdbcType="VARCHAR" property="selfStatus"/>
+        <result column="familyStatus" jdbcType="VARCHAR" property="familyStatus"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="isConCaseIn14" jdbcType="BIT" property="isConCaseIn14"/>
+        <result column="isPassRiskAreaIn14" jdbcType="BIT" property="isPassRiskAreaIn14"/>
+        <result column="isAbroadIn14" jdbcType="BIT" property="isAbroadIn14"/>
+        <result column="isConRiskAbrIn14" jdbcType="BIT" property="isConRiskAbrIn14"/>
+        <result column="details" jdbcType="LONGVARCHAR" property="details"/>
+        <result column="reportDate" jdbcType="VARCHAR" property="reportDate"/>
+    </resultMap>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from HealthChart
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insert" parameterType="com.example.diseasereport.model.HealthChart"
+            useGeneratedKeys="true" keyProperty="id">
+    insert into HealthChart (id, userId, selfStatus, 
+      familyStatus, location, isConCaseIn14, 
+      isPassRiskAreaIn14, isAbroadIn14, isConRiskAbrIn14, 
+      details, reportDate)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{selfStatus,jdbcType=VARCHAR}, 
+      #{familyStatus,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{isConCaseIn14,jdbcType=BIT}, 
+      #{isPassRiskAreaIn14,jdbcType=BIT}, #{isAbroadIn14,jdbcType=BIT}, #{isConRiskAbrIn14,jdbcType=BIT}, 
+      #{details,jdbcType=LONGVARCHAR}, #{reportDate,jdbcType=VARCHAR})
+    on duplicate key update
+    selfStatus=#{selfStatus,jdbcType=VARCHAR},
+    familyStatus=#{familyStatus,jdbcType=VARCHAR},
+    location=#{location,jdbcType=VARCHAR},
+    isConCaseIn14=#{isConCaseIn14,jdbcType=BIT},
+    isPassRiskAreaIn14=#{isPassRiskAreaIn14,jdbcType=BIT},
+    isAbroadIn14=#{isAbroadIn14,jdbcType=BIT},
+    isConRiskAbrIn14=#{isConRiskAbrIn14,jdbcType=BIT},
+    details=#{details,jdbcType=LONGVARCHAR},
+  </insert>
+
+    <update id="updateById" parameterType="com.example.diseasereport.model.HealthChart">
+    update HealthChart
+    set userId = #{userId,jdbcType=INTEGER},
+      selfStatus = #{selfStatus,jdbcType=VARCHAR},
+      familyStatus = #{familyStatus,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      isConCaseIn14 = #{isConCaseIn14,jdbcType=BIT},
+      isPassRiskAreaIn14 = #{isPassRiskAreaIn14,jdbcType=BIT},
+      isAbroadIn14 = #{isAbroadIn14,jdbcType=BIT},
+      isConRiskAbrIn14 = #{isConRiskAbrIn14,jdbcType=BIT},
+      details = #{details,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, userId, selfStatus, familyStatus, location, isConCaseIn14, isPassRiskAreaIn14, 
+    isAbroadIn14, isConRiskAbrIn14, details
+    from HealthChart
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, userId, selfStatus, familyStatus, location, isConCaseIn14, isPassRiskAreaIn14, 
+    isAbroadIn14, isConRiskAbrIn14, details
+    from HealthChart
+  </select>
+</mapper>

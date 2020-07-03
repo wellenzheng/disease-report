@@ -9,8 +9,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.diseasereport.mapper.UserInfoMapper;
 import com.example.diseasereport.mapper.UserMapper;
 import com.example.diseasereport.model.User;
+import com.example.diseasereport.model.UserInfo;
 import com.example.diseasereport.request.UserRequest;
 import com.example.diseasereport.utils.RedisUtils;
 
@@ -27,6 +29,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
     @Autowired
     private RedisUtils redisUtils;
@@ -49,11 +54,13 @@ public class UserService implements UserDetailsService {
             return -1; //表示用户已存在
         }
         if (verify(userRequest)) {
-            return userMapper.insert(User.builder()
+            int userId = userMapper.insert(User.builder()
                     .email(userRequest.getEmail())
                     .password(passwordEncoder().encode(userRequest.getPassword()))
                     .role("STUDENT")
                     .build());
+            userInfoMapper.insert(UserInfo.builder().userId(userId).build());
+            return userId;
         }
         return 0; //表示验证码不正确
     }
