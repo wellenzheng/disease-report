@@ -37,6 +37,9 @@ public class HealthChartService {
             return healthChart;
         }
         HealthChart chart = healthChartMapper.selectByUserId(userId);
+        if(chart==null){
+            return null;
+        }
         redisUtils.set(prefix + chart.getUserId(), chart);
         return chart;
     }

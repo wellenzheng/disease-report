@@ -23,13 +23,13 @@ public class HealthChart {
 
     private String location;
 
-    private Boolean isConCaseIn14;
+    private String isConCaseIn14;
 
-    private Boolean isPassRiskAreaIn14;
+    private String isPassRiskAreaIn14;
 
-    private Boolean isAbroadIn14;
+    private String isAbroadIn14;
 
-    private Boolean isConRiskAbrIn14;
+    private String isConRiskAbrIn14;
 
     private String details;
 
