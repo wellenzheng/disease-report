@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.diseasereport.model.Doctor;
+import com.example.diseasereport.response.InfoAndHealth;
 
 @Repository
 @Mapper
@@ -22,4 +23,6 @@ public interface DoctorMapper {
     int updateById(Doctor doctor);
 
     Doctor selectByUserId(@Param("userId") Integer userId);
+
+    List<InfoAndHealth> selectAllInfoAndHealth();
 }

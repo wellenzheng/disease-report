@@ -49,4 +49,9 @@
     from Doctor
     where userId=#{userId}
   </select>
+
+    <select id="selectAllInfoAndHealth" resultType="com.example.diseasereport.response.InfoAndHealth">
+        select info.*, chart.*
+        from UserInfo info left join HealthChart chart on info.userId=chart.userId
+    </select>
 </mapper>

@@ -2,7 +2,9 @@ package com.example.diseasereport.model;
 
 import java.util.Collection;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User implements UserDetails {
     @Id
+    @GeneratedValue(generator = "JDBC")
     private Integer id;
 
     private String email;

@@ -1,21 +1,35 @@
-package com.example.diseasereport.model;
-
-import org.springframework.data.annotation.Id;
+package com.example.diseasereport.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author zhengweijun
+ * Created on 2020-07-04
+ */
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class HealthChart {
-    @Id
-    private Integer id;
-
+public class InfoAndHealth {
     private Integer userId;
+
+    private String schoolId;
+
+    private String name;
+
+    private String department;
+
+    private String phone;
+
+    private String urgentPhone;
+
+    private String isHKMT;
+
+    private String isInternational;
 
     private String selfStatus;
 

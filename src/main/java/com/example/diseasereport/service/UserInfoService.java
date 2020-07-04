@@ -27,10 +27,11 @@ public class UserInfoService {
     private RedisUtils redisUtils;
 
     public Integer updateByUserId(UserInfo userInfo) {
-        if (redisUtils.set(prefix + userInfo.getUserId(), userInfo)) {
-            return userInfoMapper.updateByUserId(userInfo);
+        Integer integer = userInfoMapper.updateByUserId(userInfo);
+        if (integer != 0) {
+            redisUtils.set(prefix + userInfo.getUserId(), userInfo);
         }
-        return 0;
+        return integer;
     }
 
     public UserInfo getByUserId(Integer userId) {

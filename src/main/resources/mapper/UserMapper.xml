@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.diseasereport.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="com.example.diseasereport.model.User">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="role" jdbcType="VARCHAR" property="role" />
-  </resultMap>
-  <delete id="deleteById" parameterType="java.lang.Integer">
+    <resultMap id="BaseResultMap" type="com.example.diseasereport.model.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="role" jdbcType="VARCHAR" property="role"/>
+    </resultMap>
+    <delete id="deleteById" parameterType="java.lang.Integer">
     delete from User
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.example.diseasereport.model.User">
-    insert into User (id, email, password, role)
-    values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR},
-    #{password,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR})
-  </insert>
-  <update id="updateById" parameterType="com.example.diseasereport.model.User">
-    update User
-    set email = #{email,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      role = #{role,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    <insert id="insert" keyProperty="user.id"
+            parameterType="com.example.diseasereport.model.User" useGeneratedKeys="true">
+        insert into `User` (email, password, role)
+        values
+        (#{user.email,jdbcType=VARCHAR},
+        #{user.password,jdbcType=VARCHAR},
+        #{user.role,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateById" parameterType="com.example.diseasereport.model.User"
+            useGeneratedKeys="true" keyProperty="user.id">
+    update `User`
+    set email = #{user.email,jdbcType=VARCHAR},
+      password = #{user.password,jdbcType=VARCHAR},
+      role = #{user.role,jdbcType=VARCHAR}
+    where id = #{user.id,jdbcType=INTEGER}
   </update>
-  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, email, password, role
     from User
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAll" resultMap="BaseResultMap">
     select id, email, password, name, role
     from User
   </select>
 
-  <select id="selectByEmail" resultMap="BaseResultMap">
+    <select id="selectByEmail" resultMap="BaseResultMap">
     select *
     from User
     where email=#{email}

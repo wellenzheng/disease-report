@@ -9,8 +9,8 @@
         <result column="department" jdbcType="VARCHAR" property="department"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="urgentPhone" jdbcType="VARCHAR" property="urgentPhone"/>
-        <result column="isHKMT" jdbcType="BIT" property="isHKMT"/>
-        <result column="isInternational" jdbcType="BIT" property="isInternational"/>
+        <result column="isHKMT" jdbcType="VARCHAR" property="isHKMT"/>
+        <result column="isInternational" jdbcType="VARCHAR" property="isInternational"/>
     </resultMap>
     <delete id="deleteById" parameterType="java.lang.Integer">
     delete from UserInfo
@@ -24,7 +24,7 @@
       )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{schoolId,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{urgentPhone,jdbcType=VARCHAR}, #{isHKMT,jdbcType=BIT}, #{isInternational,jdbcType=BIT}
+      #{urgentPhone,jdbcType=VARCHAR}, #{isHKMT,jdbcType=VARCHAR}, #{isInternational,jdbcType=VARCHAR}
       )
   </insert>
 
@@ -36,21 +36,29 @@
       department = #{department,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       urgentPhone = #{urgentPhone,jdbcType=VARCHAR},
-      isHKMT = #{isHKMT,jdbcType=BIT},
-      isInternational = #{isInternational,jdbcType=BIT}
+      isHKMT = #{isHKMT,jdbcType=VARCHAR},
+      isInternational = #{isInternational,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
     <update id="updateByUserId" parameterType="com.example.diseasereport.model.UserInfo"
-            useGeneratedKeys="true" keyProperty="userInfo.id">
-    update UserInfo
+            useGeneratedKeys="true" keyProperty="id">
+    insert into UserInfo (userId, schoolId,
+      name, department, phone,
+      urgentPhone, isHKMT, isInternational
+      )
+    values (#{userId,jdbcType=INTEGER}, #{schoolId,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{urgentPhone,jdbcType=VARCHAR}, #{isHKMT,jdbcType=VARCHAR}, #{isInternational,jdbcType=VARCHAR}
+      )
+    on duplicate key update
     set schoolId = #{schoolId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       department = #{department,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       urgentPhone = #{urgentPhone,jdbcType=VARCHAR},
-      isHKMT = #{isHKMT,jdbcType=BIT},
-      isInternational = #{isInternational,jdbcType=BIT}
+      isHKMT = #{isHKMT,jdbcType=VARCHAR},
+      isInternational = #{isInternational,jdbcType=VARCHAR}
     where userId = #{userId,jdbcType=INTEGER}
   </update>
 

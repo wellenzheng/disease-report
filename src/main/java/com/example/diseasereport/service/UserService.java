@@ -53,15 +53,11 @@ public class UserService implements UserDetailsService {
             return -1; //表示用户已存在
         }
         if (verify(userRequest)) {
-            int userId = userMapper.insert(User.builder()
+            return userMapper.insert(User.builder()
                     .email(userRequest.getEmail())
                     .password(passwordEncoder().encode(userRequest.getPassword()))
                     .role("STUDENT")
                     .build());
-            if (redisUtils.set("userInfo" + userId, UserInfo.builder().userId(userId).build())) {
-                userInfoMapper.insert(UserInfo.builder().userId(userId).build());
-            }
-            return userId;
         }
         return 0; //表示验证码不正确
     }
