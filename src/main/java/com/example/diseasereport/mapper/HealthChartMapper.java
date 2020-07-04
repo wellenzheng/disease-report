@@ -1,10 +1,12 @@
 package com.example.diseasereport.mapper;
 
-import com.example.diseasereport.model.HealthChart;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import com.example.diseasereport.model.HealthChart;
 
 @Repository
 @Mapper
@@ -18,4 +20,6 @@ public interface HealthChartMapper {
     List<HealthChart> selectAll();
 
     int updateById(HealthChart healthChart);
+
+    HealthChart selectByUserId(@Param("userId") Integer userId);
 }

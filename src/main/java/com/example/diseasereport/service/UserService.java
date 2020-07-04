@@ -1,7 +1,6 @@
 package com.example.diseasereport.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -59,7 +58,9 @@ public class UserService implements UserDetailsService {
                     .password(passwordEncoder().encode(userRequest.getPassword()))
                     .role("STUDENT")
                     .build());
-            userInfoMapper.insert(UserInfo.builder().userId(userId).build());
+            if (redisUtils.set("userInfo" + userId, UserInfo.builder().userId(userId).build())) {
+                userInfoMapper.insert(UserInfo.builder().userId(userId).build());
+            }
             return userId;
         }
         return 0; //表示验证码不正确

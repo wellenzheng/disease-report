@@ -9,6 +9,7 @@ import com.example.diseasereport.common.CommonResponse;
 import com.example.diseasereport.request.UserRequest;
 import com.example.diseasereport.service.UserService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
@@ -18,13 +19,14 @@ import io.swagger.annotations.ApiParam;
  */
 
 @RestController
+@Api(value = "注册控制器", tags = "RegisterController")
 public class RegisterController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping("/register")
-    @ApiOperation(value = "register", tags = "注册")
+    @ApiOperation(value = "register")
     public CommonResponse<Integer> register(
             @ApiParam(name = "userRequest", value = "用户注册信息") @RequestBody UserRequest userRequest
     ) {

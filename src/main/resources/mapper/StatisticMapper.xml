@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.diseasereport.mapper.StatisticMapper">
+    <resultMap id="BaseResultMap" type="com.example.diseasereport.model.Statistic">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="totalDiagnose" jdbcType="INTEGER" property="totalDiagnose"/>
+        <result column="totalDeath" jdbcType="INTEGER" property="totalDeath"/>
+        <result column="totalCure" jdbcType="INTEGER" property="totalCure"/>
+        <result column="currDiagnose" jdbcType="INTEGER" property="currDiagnose"/>
+        <result column="currSuspect" jdbcType="INTEGER" property="currSuspect"/>
+        <result column="currAsy" jdbcType="INTEGER" property="currAsy"/>
+        <result column="newDiagnose" jdbcType="INTEGER" property="newDiagnose"/>
+        <result column="area" jdbcType="VARCHAR" property="area"/>
+        <result column="updateDate" jdbcType="VARCHAR" property="updateDate"/>
+    </resultMap>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from Statistic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insert" parameterType="com.example.diseasereport.model.Statistic">
+    insert into Statistic (id, totalDiagnose, totalDeath, 
+      totalCure, currDiagnose, currSuspect, 
+      currAsy, newDiagnose, area, 
+      updateDate)
+    values (#{id,jdbcType=INTEGER}, #{totalDiagnose,jdbcType=INTEGER}, #{totalDeath,jdbcType=INTEGER}, 
+      #{totalCure,jdbcType=INTEGER}, #{currDiagnose,jdbcType=INTEGER}, #{currSuspect,jdbcType=INTEGER}, 
+      #{currAsy,jdbcType=INTEGER}, #{newDiagnose,jdbcType=INTEGER}, #{area,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=VARCHAR})
+  </insert>
+
+    <update id="updateById" parameterType="com.example.diseasereport.model.Statistic">
+    update Statistic
+    set totalDiagnose = #{totalDiagnose,jdbcType=INTEGER},
+      totalDeath = #{totalDeath,jdbcType=INTEGER},
+      totalCure = #{totalCure,jdbcType=INTEGER},
+      currDiagnose = #{currDiagnose,jdbcType=INTEGER},
+      currSuspect = #{currSuspect,jdbcType=INTEGER},
+      currAsy = #{currAsy,jdbcType=INTEGER},
+      newDiagnose = #{newDiagnose,jdbcType=INTEGER},
+      area = #{area,jdbcType=VARCHAR},
+      updateDate = #{updateDate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, totalDiagnose, totalDeath, totalCure, currDiagnose, currSuspect, currAsy, 
+    newDiagnose, area, updateDate
+    from Statistic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, totalDiagnose, totalDeath, totalCure, currDiagnose, currSuspect, currAsy, 
+    newDiagnose, area, updateDate
+    from Statistic
+  </select>
+
+    <select id="selectGroupByDate" resultMap="BaseResultMap">
+    select
+    sum(s.totalDiagnose) as totalDiagnose,
+    sum(s.totalDeath) as totalDeath,
+    sum(s.totalCure) as totalCure,
+    sum(s.currDiagnose) as currDiagnose,
+    sum(s.currSuspect) as currSuspect,
+    sum(s.currAsy) as currAsy,
+    sum(s.newDiagnose) as newDiagnose,
+    s.updateDate as updateDate
+    from Statistic s
+    group by s.updateDate
+    order by s.updateDate
+  </select>
+</mapper>

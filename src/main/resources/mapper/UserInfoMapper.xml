@@ -64,4 +64,10 @@
     select id, userId, schoolId, name, department, phone, urgentPhone, isHKMT, isInternational
     from UserInfo
   </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select *
+        from UserInfo
+        where userId=#{userId}
+    </select>
 </mapper>
