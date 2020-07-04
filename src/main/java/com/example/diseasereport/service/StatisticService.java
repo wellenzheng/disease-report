@@ -1,5 +1,6 @@
 package com.example.diseasereport.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,20 +37,33 @@ public class StatisticService {
 
     public List<Statistic> getAll() {
         List<Object> allStatistics = redisUtils.lGet("allStatistics", 0, -1);
-        return statisticMapper.selectAll();
+        if (allStatistics != null && allStatistics.size() != 0) {
+            return castList(allStatistics, Statistic.class);
+        }
+        List<Statistic> statisticList = statisticMapper.selectAll();
+        if (statisticList != null && statisticList.size() != 0) {
+            redisUtils.lSet("allStatistics", statisticList);
+        }
+        return statisticList;
     }
 
     public List<Statistic> getAllGroupByDate() {
-        return statisticMapper.selectGroupByDate();
+        List<Object> statistics = redisUtils.lGet("statisticsGroupByDate", 0, -1);
+        if (statistics != null && statistics.size() != 0) {
+            return castList(statistics, Statistic.class);
+        }
+        List<Statistic> statisticList = statisticMapper.selectGroupByDate();
+        if (statisticList != null && statisticList.size() != 0) {
+            redisUtils.lSet("statisticsGroupByDate", statisticList);
+        }
+        return statisticList;
     }
 
     public Map<String, List<Statistic>> getAllGroupByArea() {
         Map<String, List<Statistic>> map = new HashMap<>();
         for (String area : areaList) {
             List<Object> objectList = redisUtils.lGet(area, 0, -1);
-            if (objectList != null && objectList.size() != 0) {
-
-            }
+            map.put(area, castList(objectList, Statistic.class));
         }
         List<Statistic> statisticList = statisticMapper.selectAll();
         for (Statistic statistic : statisticList) {
@@ -62,8 +76,20 @@ public class StatisticService {
             }
         }
         map.forEach(((area, statistics) -> {
+            redisUtils.delete(area);
             redisUtils.lSet(area, statistics);
         }));
         return map;
+    }
+
+    private <T> List<T> castList(Object object, Class<T> tClass) {
+        List<T> result = new ArrayList<>();
+        if (object instanceof List<?>) {
+            for (Object o : (List<?>) object) {
+                result.add(tClass.cast(o));
+            }
+            return result;
+        }
+        return null;
     }
 }

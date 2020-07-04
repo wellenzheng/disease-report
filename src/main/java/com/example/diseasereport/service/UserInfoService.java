@@ -39,7 +39,9 @@ public class UserInfoService {
             return userInfo;
         }
         UserInfo info = userInfoMapper.selectByUserId(userId);
-        redisUtils.set(prefix + info.getUserId(), info);
+        if (info != null) {
+            redisUtils.set(prefix + info.getUserId(), info);
+        }
         return info;
     }
 }

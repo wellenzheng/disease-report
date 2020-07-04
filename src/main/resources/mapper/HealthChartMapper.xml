@@ -37,8 +37,8 @@
     isPassRiskAreaIn14=#{isPassRiskAreaIn14,jdbcType=BIT},
     isAbroadIn14=#{isAbroadIn14,jdbcType=BIT},
     isConRiskAbrIn14=#{isConRiskAbrIn14,jdbcType=BIT},
-    details=#{details,jdbcType=LONGVARCHAR}
-    reportDate=#{reportDate,jdbcType=VARCHAR},
+    details=#{details,jdbcType=LONGVARCHAR},
+    reportDate=#{reportDate,jdbcType=VARCHAR}
   </insert>
 
     <update id="updateById" parameterType="com.example.diseasereport.model.HealthChart">
