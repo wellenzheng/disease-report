@@ -32,6 +32,4 @@ public class StatisticController {
     public CommonResponse<List<Statistic>> getGroupByDate() {
         return CommonResponse.success("获取每一天疫情汇总", statisticService.getAllGroupByDate());
     }
-
-
 }

@@ -27,7 +27,7 @@ public class UserInfo {
 
     private String urgentPhone;
 
-    private Boolean isHKMT;
+    private String isHKMT;
 
-    private Boolean isInternational;
+    private String isInternational;
 }

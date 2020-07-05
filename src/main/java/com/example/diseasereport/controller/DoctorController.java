@@ -1,5 +1,7 @@
 package com.example.diseasereport.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.diseasereport.common.CommonResponse;
 import com.example.diseasereport.model.Doctor;
+import com.example.diseasereport.response.InfoAndHealth;
 import com.example.diseasereport.service.DoctorService;
 
 import io.swagger.annotations.Api;
@@ -34,5 +37,12 @@ public class DoctorController {
             @ApiParam(name = "userId", value = "用户id") @RequestParam Integer userId
     ) {
         return CommonResponse.success("获取医生信息", doctorService.getByUserId(userId));
+    }
+
+    @GetMapping("getAllInfoAndHealth")
+    @PreAuthorize("hasAnyAuthority('DOCTOR')")
+    @ApiOperation(value = "getAllInfoAndHealth")
+    public CommonResponse<List<InfoAndHealth>> getAllInfoAndHealth() {
+        return CommonResponse.success("获取所有用户信息和健康表", doctorService.getAllInfoAndHealth());
     }
 }

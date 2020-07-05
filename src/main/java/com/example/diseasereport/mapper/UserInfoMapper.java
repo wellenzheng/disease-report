@@ -21,7 +21,7 @@ public interface UserInfoMapper {
 
     int updateById(UserInfo userInfo);
 
-    Integer updateByUserId(UserInfo userInfo);
+    int insertOrUpdate(UserInfo userInfo);
 
     UserInfo selectByUserId(@Param("userId") Integer userId);
 }

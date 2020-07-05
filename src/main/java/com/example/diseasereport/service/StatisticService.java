@@ -25,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class StatisticService {
 
+    private final String prefix = "statistic:";
+
     private final String[] areaList = {"北京", "香港", "上海", "四川", "河北", "甘肃", "陕西", "辽宁", "广东", "台湾",
             "福建", "重庆", "浙江", "江苏", "天津", "云南", "澳门", "湖北", "河南", "湖南", "安徽", "黑龙江", "江西",
             "山东", "广西", "内蒙古", "山西", "海南", "吉林", "贵州", "新疆", "宁夏", "青海", "西藏"};
@@ -36,9 +38,9 @@ public class StatisticService {
     private RedisUtils redisUtils;
 
     public List<Statistic> getAll() {
-        List<Object> allStatistics = redisUtils.lGet("allStatistics", 0, -1);
+        List<Object> allStatistics = redisUtils.lGet(prefix + "all", 0, -1);
         if (allStatistics != null && allStatistics.size() != 0) {
-            return castList(allStatistics, Statistic.class);
+            return RedisUtils.castList(allStatistics, Statistic.class);
         }
         List<Statistic> statisticList = statisticMapper.selectAll();
         if (statisticList != null && statisticList.size() != 0) {
@@ -48,13 +50,13 @@ public class StatisticService {
     }
 
     public List<Statistic> getAllGroupByDate() {
-        List<Object> statistics = redisUtils.lGet("statisticsGroupByDate", 0, -1);
+        List<Object> statistics = redisUtils.lGet(prefix + "groupByDate", 0, -1);
         if (statistics != null && statistics.size() != 0) {
-            return castList(statistics, Statistic.class);
+            return RedisUtils.castList(statistics, Statistic.class);
         }
         List<Statistic> statisticList = statisticMapper.selectGroupByDate();
         if (statisticList != null && statisticList.size() != 0) {
-            redisUtils.lSet("statisticsGroupByDate", statisticList);
+            redisUtils.lSet(prefix + "groupByDate", statisticList);
         }
         return statisticList;
     }
@@ -63,7 +65,7 @@ public class StatisticService {
         Map<String, List<Statistic>> map = new HashMap<>();
         for (String area : areaList) {
             List<Object> objectList = redisUtils.lGet(area, 0, -1);
-            map.put(area, castList(objectList, Statistic.class));
+            map.put(area, RedisUtils.castList(objectList, Statistic.class));
         }
         List<Statistic> statisticList = statisticMapper.selectAll();
         for (Statistic statistic : statisticList) {
@@ -80,16 +82,5 @@ public class StatisticService {
             redisUtils.lSet(area, statistics);
         }));
         return map;
-    }
-
-    private <T> List<T> castList(Object object, Class<T> tClass) {
-        List<T> result = new ArrayList<>();
-        if (object instanceof List<?>) {
-            for (Object o : (List<?>) object) {
-                result.add(tClass.cast(o));
-            }
-            return result;
-        }
-        return null;
     }
 }

@@ -26,9 +26,12 @@ public class HealthChartService {
     @Autowired
     private RedisUtils redisUtils;
 
-    public Integer insert(HealthChart healthChart) {
-        redisUtils.set(prefix + healthChart.getUserId(), healthChart);
-        return healthChartMapper.insert(healthChart);
+    public Integer addHealthChart(HealthChart healthChart) {
+        int i = healthChartMapper.insert(healthChart);
+        if (i != 0) {
+            redisUtils.set(prefix + healthChart.getUserId(), healthChart);
+        }
+        return i;
     }
 
     public HealthChart getByUserId(Integer userId) {

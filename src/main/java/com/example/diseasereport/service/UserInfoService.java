@@ -26,8 +26,8 @@ public class UserInfoService {
     @Autowired
     private RedisUtils redisUtils;
 
-    public Integer updateByUserId(UserInfo userInfo) {
-        Integer integer = userInfoMapper.updateByUserId(userInfo);
+    public Integer insertOrUpdate(UserInfo userInfo) {
+        int integer = userInfoMapper.insertOrUpdate(userInfo);
         if (integer != 0) {
             redisUtils.set(prefix + userInfo.getUserId(), userInfo);
         }

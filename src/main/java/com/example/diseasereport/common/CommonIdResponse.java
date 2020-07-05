@@ -32,4 +32,10 @@ public class CommonIdResponse {
 
     @ApiModelProperty("健康表id")
     private Integer healthChartId;
+
+    @ApiModelProperty("病例id")
+    private Integer casesId;
+
+    @ApiModelProperty("统计信息id")
+    private Integer statisticId;
 }

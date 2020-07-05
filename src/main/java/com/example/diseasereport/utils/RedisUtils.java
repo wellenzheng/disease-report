@@ -1,5 +1,6 @@
 package com.example.diseasereport.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -256,5 +257,16 @@ public class RedisUtils {
             e.printStackTrace();
             return 0L;
         }
+    }
+
+    public static <T> List<T> castList(Object object, Class<T> tClass) {
+        List<T> result = new ArrayList<>();
+        if (object instanceof List<?>) {
+            for (Object o : (List<?>) object) {
+                result.add(tClass.cast(o));
+            }
+            return result;
+        }
+        return null;
     }
 }

@@ -41,7 +41,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-    <update id="updateByUserId" parameterType="com.example.diseasereport.model.UserInfo"
+    <insert id="insertOrUpdate" parameterType="com.example.diseasereport.model.UserInfo"
             useGeneratedKeys="true" keyProperty="id">
     insert into UserInfo (userId, schoolId,
       name, department, phone,
@@ -52,15 +52,15 @@
       #{urgentPhone,jdbcType=VARCHAR}, #{isHKMT,jdbcType=VARCHAR}, #{isInternational,jdbcType=VARCHAR}
       )
     on duplicate key update
-    set schoolId = #{schoolId,jdbcType=VARCHAR},
+      userId = #{userId,jdbcType=INTEGER},
+      schoolId = #{schoolId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       department = #{department,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       urgentPhone = #{urgentPhone,jdbcType=VARCHAR},
       isHKMT = #{isHKMT,jdbcType=VARCHAR},
       isInternational = #{isInternational,jdbcType=VARCHAR}
-    where userId = #{userId,jdbcType=INTEGER}
-  </update>
+  </insert>
 
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, userId, schoolId, name, department, phone, urgentPhone, isHKMT, isInternational

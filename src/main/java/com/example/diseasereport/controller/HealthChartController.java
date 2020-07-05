@@ -38,7 +38,7 @@ public class HealthChartController {
             @ApiParam(name = "healthChart", value = "健康信息表") @RequestBody HealthChart healthChart
     ) {
         return CommonResponse.success("上报成功",
-                CommonIdResponse.builder().healthChartId(healthChartService.insert(healthChart)).build());
+                CommonIdResponse.builder().healthChartId(healthChartService.addHealthChart(healthChart)).build());
     }
 
     @GetMapping("/get")

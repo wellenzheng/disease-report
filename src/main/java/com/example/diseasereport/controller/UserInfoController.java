@@ -36,7 +36,7 @@ public class UserInfoController {
     public CommonResponse<Integer> editUserInfo(
             @ApiParam(name = "userInfo", value = "用户基础信息") @RequestBody UserInfo userInfo
     ) {
-        return CommonResponse.success("编辑用户基础信息", userInfoService.updateByUserId(userInfo));
+        return CommonResponse.success("编辑用户基础信息", userInfoService.insertOrUpdate(userInfo));
     }
 
     @GetMapping("/get")

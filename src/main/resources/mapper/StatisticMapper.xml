@@ -10,7 +10,6 @@
         <result column="currSuspect" jdbcType="INTEGER" property="currSuspect"/>
         <result column="currAsy" jdbcType="INTEGER" property="currAsy"/>
         <result column="newDiagnose" jdbcType="INTEGER" property="newDiagnose"/>
-        <result column="area" jdbcType="VARCHAR" property="area"/>
         <result column="updateDate" jdbcType="VARCHAR" property="updateDate"/>
     </resultMap>
     <delete id="deleteById" parameterType="java.lang.Integer">
@@ -21,11 +20,10 @@
     <insert id="insert" parameterType="com.example.diseasereport.model.Statistic">
     insert into Statistic (id, totalDiagnose, totalDeath, 
       totalCure, currDiagnose, currSuspect, 
-      currAsy, newDiagnose, area, 
-      updateDate)
+      currAsy, newDiagnose, updateDate)
     values (#{id,jdbcType=INTEGER}, #{totalDiagnose,jdbcType=INTEGER}, #{totalDeath,jdbcType=INTEGER}, 
       #{totalCure,jdbcType=INTEGER}, #{currDiagnose,jdbcType=INTEGER}, #{currSuspect,jdbcType=INTEGER}, 
-      #{currAsy,jdbcType=INTEGER}, #{newDiagnose,jdbcType=INTEGER}, #{area,jdbcType=VARCHAR}, 
+      #{currAsy,jdbcType=INTEGER}, #{newDiagnose,jdbcType=INTEGER},
       #{updateDate,jdbcType=VARCHAR})
   </insert>
 
@@ -38,25 +36,24 @@
       currSuspect = #{currSuspect,jdbcType=INTEGER},
       currAsy = #{currAsy,jdbcType=INTEGER},
       newDiagnose = #{newDiagnose,jdbcType=INTEGER},
-      area = #{area,jdbcType=VARCHAR},
       updateDate = #{updateDate,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, totalDiagnose, totalDeath, totalCure, currDiagnose, currSuspect, currAsy, 
-    newDiagnose, area, updateDate
+    select id, totalDiagnose, totalDeath, totalCure, currDiagnose,
+    currSuspect, currAsy, newDiagnose, updateDate
     from Statistic
     where id = #{id,jdbcType=INTEGER}
   </select>
 
     <select id="selectAll" resultMap="BaseResultMap">
-    select id, totalDiagnose, totalDeath, totalCure, currDiagnose, currSuspect, currAsy, 
-    newDiagnose, area, updateDate
+    select id, totalDiagnose, totalDeath, totalCure, currDiagnose,
+    currSuspect, currAsy, newDiagnose, updateDate
     from Statistic
   </select>
 
-    <select id="selectGroupByDate" resultMap="BaseResultMap">
+    <select id="selectGroupByDate" resultType="com.example.diseasereport.model.Statistic">
     select
     sum(s.totalDiagnose) as totalDiagnose,
     sum(s.totalDeath) as totalDeath,
