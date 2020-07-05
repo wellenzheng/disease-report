@@ -94,6 +94,32 @@ public class RedisUtils {
     }
 
     /**
+     * 递增
+     *
+     * @param key 键
+     * @param delta 要增加几(大于0)
+     */
+    public Long incr(String key, long delta) {
+        if (delta < 0) {
+            throw new RuntimeException("递增因子必须大于0");
+        }
+        return redisTemplate.opsForValue().increment(key, delta);
+    }
+
+    /**
+     * 递减
+     *
+     * @param key 键
+     * @param delta 要减少几(小于0)
+     */
+    public Long decr(String key, long delta) {
+        if (delta < 0) {
+            throw new RuntimeException("递减因子必须大于0");
+        }
+        return redisTemplate.opsForValue().increment(key, -delta);
+    }
+
+    /**
      * 删除缓存
      *
      * @param key 可以传一个值 或多个
@@ -195,7 +221,7 @@ public class RedisUtils {
      * @param key 键
      * @param value 值
      */
-    public Boolean lSet(String key, List<Object> value) {
+    public Boolean lSetAll(String key, Object... value) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             return true;
@@ -212,7 +238,7 @@ public class RedisUtils {
      * @param value 值
      * @param time 时间(秒)
      */
-    public Boolean lSet(String key, List<Object> value, long time) {
+    public Boolean lSetAll(String key, long time, Object... value) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             if (time > 0) {
@@ -259,14 +285,11 @@ public class RedisUtils {
         }
     }
 
-    public static <T> List<T> castList(Object object, Class<T> tClass) {
+    public static <T> List<T> castList(List<Object> objectList, Class<T> tClass) {
         List<T> result = new ArrayList<>();
-        if (object instanceof List<?>) {
-            for (Object o : (List<?>) object) {
-                result.add(tClass.cast(o));
-            }
-            return result;
+        for (Object o : objectList) {
+            result.add(tClass.cast(o));
         }
-        return null;
+        return result;
     }
 }

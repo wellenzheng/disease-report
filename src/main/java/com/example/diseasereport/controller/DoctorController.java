@@ -39,7 +39,7 @@ public class DoctorController {
         return CommonResponse.success("获取医生信息", doctorService.getByUserId(userId));
     }
 
-    @GetMapping("getAllInfoAndHealth")
+    @GetMapping("/getAllInfoAndHealth")
     @PreAuthorize("hasAnyAuthority('DOCTOR')")
     @ApiOperation(value = "getAllInfoAndHealth")
     public CommonResponse<List<InfoAndHealth>> getAllInfoAndHealth() {

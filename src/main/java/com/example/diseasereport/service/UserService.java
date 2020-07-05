@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.example.diseasereport.mapper.UserInfoMapper;
 import com.example.diseasereport.mapper.UserMapper;
 import com.example.diseasereport.model.User;
-import com.example.diseasereport.model.UserInfo;
 import com.example.diseasereport.request.UserRequest;
 import com.example.diseasereport.utils.RedisUtils;
 

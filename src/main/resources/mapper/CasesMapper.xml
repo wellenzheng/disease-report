@@ -43,4 +43,15 @@
         from Cases
         where userId=#{userId}
     </select>
+
+    <update id="updateByUserId" parameterType="com.example.diseasereport.model.Cases"
+            useGeneratedKeys="true" keyProperty="id">
+        update Cases
+        set
+          doctorId = #{doctorId,jdbcType=INTEGER},
+          status = #{status,jdbcType=VARCHAR},
+          severity = #{severity,jdbcType=VARCHAR},
+          updateTime = #{updateTime,jdbcType=VARCHAR}
+        where userId = #{userId}
+    </update>
 </mapper>

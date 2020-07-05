@@ -1,10 +1,8 @@
 package com.example.diseasereport.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +42,7 @@ public class StatisticService {
         }
         List<Statistic> statisticList = statisticMapper.selectAll();
         if (statisticList != null && statisticList.size() != 0) {
-            redisUtils.lSet("allStatistics", statisticList);
+            redisUtils.lSetAll("allStatistics", statisticList.toArray());
         }
         return statisticList;
     }
@@ -56,7 +54,7 @@ public class StatisticService {
         }
         List<Statistic> statisticList = statisticMapper.selectGroupByDate();
         if (statisticList != null && statisticList.size() != 0) {
-            redisUtils.lSet(prefix + "groupByDate", statisticList);
+            redisUtils.lSetAll(prefix + "groupByDate", statisticList.toArray());
         }
         return statisticList;
     }

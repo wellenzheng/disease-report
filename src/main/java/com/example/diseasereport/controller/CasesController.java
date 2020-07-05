@@ -53,4 +53,13 @@ public class CasesController {
     public CommonResponse<Cases> getByUserId(Integer userId) {
         return CommonResponse.success("获取个人病例", casesService.getByUserId(userId));
     }
+
+    @PostMapping("/edit")
+    @PreAuthorize("hasAnyAuthority('DOCTOR')")
+    @ApiOperation(value = "")
+    public CommonResponse<CommonIdResponse> editCases(
+            @ApiParam(name = "cases", value = "病例") @RequestBody Cases cases
+    ) {
+        return CommonResponse.success("编辑病例", CommonIdResponse.builder().casesId(casesService.editByUserId(cases)).build());
+    }
 }

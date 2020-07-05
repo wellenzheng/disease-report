@@ -59,8 +59,20 @@ public class CasesService {
         }
         List<Cases> casesList = casesMapper.selectAll();
         if (casesList != null && casesList.size() != 0) {
-            redisUtils.lSet(prefix + "all", casesList);
+            redisUtils.delete(prefix + "all");
+            redisUtils.lSetAll(prefix + "all", casesList.toArray());
         }
         return casesList;
+    }
+
+    public Integer editByUserId(Cases cases) {
+        if (cases == null || cases.getUserId() == null) {
+            return null;
+        }
+        int i = casesMapper.updateByUserId(cases.getUserId());
+        if (i != 0) {
+            redisUtils.set(prefix + cases.getUserId(), cases);
+        }
+        return i;
     }
 }

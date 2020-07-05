@@ -24,4 +24,6 @@ public interface UserInfoMapper {
     int insertOrUpdate(UserInfo userInfo);
 
     UserInfo selectByUserId(@Param("userId") Integer userId);
+
+    long countAll();
 }
