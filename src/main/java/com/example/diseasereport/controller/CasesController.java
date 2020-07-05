@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.diseasereport.common.CommonIdResponse;
 import com.example.diseasereport.common.CommonResponse;
 import com.example.diseasereport.model.Cases;
+import com.example.diseasereport.response.GenderAgeSeverity;
 import com.example.diseasereport.service.CasesService;
 
 import io.swagger.annotations.Api;
@@ -56,10 +57,17 @@ public class CasesController {
 
     @PostMapping("/edit")
     @PreAuthorize("hasAnyAuthority('DOCTOR')")
-    @ApiOperation(value = "")
+    @ApiOperation(value = "editCases")
     public CommonResponse<CommonIdResponse> editCases(
             @ApiParam(name = "cases", value = "病例") @RequestBody Cases cases
     ) {
-        return CommonResponse.success("编辑病例", CommonIdResponse.builder().casesId(casesService.editByUserId(cases)).build());
+        return CommonResponse
+                .success("编辑病例", CommonIdResponse.builder().casesId(casesService.editByUserId(cases)).build());
+    }
+
+    @GetMapping("/getGenAgeSev")
+    @ApiOperation(value = "getGenAgeSev")
+    public CommonResponse<GenderAgeSeverity> getGenAgeSev() {
+        return CommonResponse.success("根据性别年龄病危程度统计", casesService.getGenAgeSev());
     }
 }

@@ -1,7 +1,9 @@
 package com.example.diseasereport.mapper;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -26,4 +28,13 @@ public interface CasesMapper {
     int updateByUserId(Integer userId);
 
     long countAll();
+
+    @MapKey("age")
+    Map<Integer, Integer> groupByAge();
+
+    @MapKey("gender")
+    Map<String, Integer> groupByGender();
+
+    @MapKey("severity")
+    Map<String, Integer> groupBySeverity();
 }

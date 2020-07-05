@@ -28,6 +28,7 @@ public class HealthChartService {
 
     public Integer addHealthChart(HealthChart healthChart) {
         int i = healthChartMapper.insert(healthChart);
+        healthChartMapper.updateAutoIncr();
         if (i != 0) {
             redisUtils.set(prefix + healthChart.getUserId(), healthChart);
         }

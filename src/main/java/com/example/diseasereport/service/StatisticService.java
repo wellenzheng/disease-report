@@ -59,26 +59,26 @@ public class StatisticService {
         return statisticList;
     }
 
-    public Map<String, List<Statistic>> getAllGroupByArea() {
-        Map<String, List<Statistic>> map = new HashMap<>();
-        for (String area : areaList) {
-            List<Object> objectList = redisUtils.lGet(area, 0, -1);
-            map.put(area, RedisUtils.castList(objectList, Statistic.class));
-        }
-        List<Statistic> statisticList = statisticMapper.selectAll();
-        for (Statistic statistic : statisticList) {
-            if (!map.containsKey(statistic.getArea())) {
-                map.put(statistic.getArea(), Lists.newArrayList(statistic));
-            } else {
-                List<Statistic> statistics = map.get(statistic.getArea());
-                statistics.add(statistic);
-                map.replace(statistic.getArea(), statistics);
-            }
-        }
-        map.forEach(((area, statistics) -> {
-            redisUtils.delete(area);
-            redisUtils.lSet(area, statistics);
-        }));
-        return map;
-    }
+//    public Map<String, List<Statistic>> getAllGroupByArea() {
+//        Map<String, List<Statistic>> map = new HashMap<>();
+//        for (String area : areaList) {
+//            List<Object> objectList = redisUtils.lGet(area, 0, -1);
+//            map.put(area, RedisUtils.castList(objectList, Statistic.class));
+//        }
+//        List<Statistic> statisticList = statisticMapper.selectAll();
+//        for (Statistic statistic : statisticList) {
+//            if (!map.containsKey(statistic.getArea())) {
+//                map.put(statistic.getArea(), Lists.newArrayList(statistic));
+//            } else {
+//                List<Statistic> statistics = map.get(statistic.getArea());
+//                statistics.add(statistic);
+//                map.replace(statistic.getArea(), statistics);
+//            }
+//        }
+//        map.forEach(((area, statistics) -> {
+//            redisUtils.delete(area);
+//            redisUtils.lSet(area, statistics);
+//        }));
+//        return map;
+//    }
 }

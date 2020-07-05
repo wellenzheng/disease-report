@@ -26,4 +26,6 @@ public interface UserInfoMapper {
     UserInfo selectByUserId(@Param("userId") Integer userId);
 
     long countAll();
+
+    void updateAutoIncr();
 }

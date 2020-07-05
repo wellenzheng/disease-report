@@ -59,4 +59,22 @@
         select count(id) as total
         from Cases
     </select>
+
+    <select id="groupByAge" resultType="java.util.HashMap">
+        select age, count(*) as `count`
+        from Cases left join UserInfo using(userId)
+        group by age
+    </select>
+
+    <select id="groupByGender" resultType="java.util.HashMap">
+        select gender, count(id) as `count`
+        from Cases left join UserInfo using(userId)
+        group by gender
+    </select>
+
+    <select id="groupBySeverity">
+        select severity, count(id) as `count`
+        from Cases left join UserInfo using(userId)
+        group by severity
+    </select>
 </mapper>

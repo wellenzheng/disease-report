@@ -22,4 +22,6 @@ public interface HealthChartMapper {
     int updateById(HealthChart healthChart);
 
     HealthChart selectByUserId(@Param("userId") Integer userId);
+
+    void updateAutoIncr();
 }

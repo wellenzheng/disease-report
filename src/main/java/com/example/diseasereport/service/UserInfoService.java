@@ -28,6 +28,7 @@ public class UserInfoService {
 
     public Integer insertOrUpdate(UserInfo userInfo) {
         int integer = userInfoMapper.insertOrUpdate(userInfo);
+        userInfoMapper.updateAutoIncr();
         if (integer != 0) {
             redisUtils.set(prefix + userInfo.getUserId(), userInfo);
         }

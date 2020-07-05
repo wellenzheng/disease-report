@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import com.example.diseasereport.mapper.CasesMapper;
 import com.example.diseasereport.mapper.DoctorMapper;
 import com.example.diseasereport.mapper.StatisticMapper;
 import com.example.diseasereport.mapper.UserInfoMapper;
@@ -31,10 +32,17 @@ class DiseaseReportApplicationTests {
     RedisUtils redisUtils;
     @Autowired
     DoctorService doctorService;
+    @Autowired
+    CasesMapper casesMapper;
 
     @Test
     void contextLoads() {
-        System.out.println(userInfoMapper.insertOrUpdate(UserInfo.builder().userId(2).schoolId("123").build()));
+        System.out.println(userInfoMapper.insert(UserInfo.builder().userId(2).schoolId("123").build()));
+    }
+
+    @Test
+    void test(){
+        System.out.println(casesMapper.groupByAge());
     }
 
     @Test
