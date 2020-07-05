@@ -6,6 +6,8 @@
         <result column="userId" jdbcType="INTEGER" property="userId"/>
         <result column="schoolId" jdbcType="VARCHAR" property="schoolId"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
         <result column="department" jdbcType="VARCHAR" property="department"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="urgentPhone" jdbcType="VARCHAR" property="urgentPhone"/>
@@ -19,11 +21,11 @@
 
     <insert id="insert" parameterType="com.example.diseasereport.model.UserInfo">
     insert into UserInfo (id, userId, schoolId, 
-      name, department, phone, 
+      name, gender, age, department, phone,
       urgentPhone, isHKMT, isInternational
       )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{schoolId,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
       #{urgentPhone,jdbcType=VARCHAR}, #{isHKMT,jdbcType=VARCHAR}, #{isInternational,jdbcType=VARCHAR}
       )
   </insert>
@@ -33,6 +35,8 @@
     set userId = #{userId,jdbcType=INTEGER},
       schoolId = #{schoolId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
       department = #{department,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       urgentPhone = #{urgentPhone,jdbcType=VARCHAR},
@@ -44,17 +48,19 @@
     <insert id="insertOrUpdate" parameterType="com.example.diseasereport.model.UserInfo"
             useGeneratedKeys="true" keyProperty="id">
     insert into UserInfo (userId, schoolId,
-      name, department, phone,
+      name, gender, age, department, phone,
       urgentPhone, isHKMT, isInternational
       )
     values (#{userId,jdbcType=INTEGER}, #{schoolId,jdbcType=VARCHAR},
-      #{name,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
       #{urgentPhone,jdbcType=VARCHAR}, #{isHKMT,jdbcType=VARCHAR}, #{isInternational,jdbcType=VARCHAR}
       )
     on duplicate key update
       userId = #{userId,jdbcType=INTEGER},
       schoolId = #{schoolId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
       department = #{department,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       urgentPhone = #{urgentPhone,jdbcType=VARCHAR},
@@ -63,13 +69,13 @@
   </insert>
 
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, userId, schoolId, name, department, phone, urgentPhone, isHKMT, isInternational
+    select *
     from UserInfo
     where id = #{id,jdbcType=INTEGER}
   </select>
 
     <select id="selectAll" resultMap="BaseResultMap">
-    select id, userId, schoolId, name, department, phone, urgentPhone, isHKMT, isInternational
+    select *
     from UserInfo
   </select>
 

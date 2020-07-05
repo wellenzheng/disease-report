@@ -24,4 +24,6 @@ public interface CasesMapper {
     Cases selectByUserId(@Param("userId") Integer userId);
 
     int updateByUserId(Integer userId);
+
+    long countAll();
 }

@@ -36,9 +36,9 @@ public class DoctorService {
     }
 
     public List<InfoAndHealth> getAllInfoAndHealth() {
-        Long hSize = redisUtils.lGetListSize("infoAndHealth");
-        Long count = userInfoMapper.countAll();
-        if (hSize.equals(count)) {
+        Long size = redisUtils.lGetListSize("infoAndHealth");
+        Long countAll = userInfoMapper.countAll();
+        if (size.equals(countAll)) {
             List<Object> infoAndHealth = redisUtils.lGet("infoAndHealth", 0, -1);
             if (infoAndHealth != null) {
                 return RedisUtils.castList(infoAndHealth, InfoAndHealth.class);

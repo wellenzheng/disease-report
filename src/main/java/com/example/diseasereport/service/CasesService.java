@@ -53,9 +53,13 @@ public class CasesService {
     }
 
     public List<Cases> getAll() {
-        List<Object> objectList = redisUtils.lGet(prefix + "all", 0, -1);
-        if (objectList != null && objectList.size() != 0) {
-            return RedisUtils.castList(objectList, Cases.class);
+        Long size = redisUtils.lGetListSize(prefix + "all");
+        Long countAll = casesMapper.countAll();
+        if (size.equals(countAll)) {
+            List<Object> objectList = redisUtils.lGet(prefix + "all", 0, -1);
+            if (objectList != null && objectList.size() != 0) {
+                return RedisUtils.castList(objectList, Cases.class);
+            }
         }
         List<Cases> casesList = casesMapper.selectAll();
         if (casesList != null && casesList.size() != 0) {

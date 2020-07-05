@@ -21,6 +21,10 @@ public class UserInfo {
 
     private String name;
 
+    private String gender;
+
+    private Integer age;
+
     private String department;
 
     private String phone;
