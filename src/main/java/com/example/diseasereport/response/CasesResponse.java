@@ -19,6 +19,12 @@ public class CasesResponse {
     @ApiModelProperty("病例id")
     private Integer casesId;
 
+    @ApiModelProperty("用户id")
+    private Integer userId;
+
+    @ApiModelProperty("医生id")
+    private Integer doctorId;
+
     @ApiModelProperty("用户姓名")
     private String username;
 

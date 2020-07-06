@@ -108,11 +108,13 @@ public class CasesService {
             redisUtils.incr("totalDeath", 1);
             redisUtils.incr("newDeath", 1);
         }
-        int i = casesMapper.updateByUserId(cases.getUserId());
+        int i = casesMapper.updateByUserId(cases);
         CasesResponse casesResponse = casesMapper.selectByUserId(cases.getUserId());
         if (i != 0) {
             redisUtils.set(prefix + cases.getUserId(), casesResponse);
-            redisUtils.lUpdateIndex(prefix + "all", casesResponse.getCasesId(), casesResponse);
+            if (redisUtils.hasKey(prefix + "all")) {
+                redisUtils.lUpdateIndex(prefix + "all", casesResponse.getCasesId() - 1, casesResponse);
+            }
         }
         return i;
     }

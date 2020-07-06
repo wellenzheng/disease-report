@@ -29,7 +29,7 @@ public interface CasesMapper {
 
     CasesResponse selectByUserId(@Param("userId") Integer userId);
 
-    int updateByUserId(Integer userId);
+    Integer updateByUserId(Cases cases);
 
     long countAll();
 

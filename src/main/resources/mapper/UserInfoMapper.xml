@@ -46,8 +46,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-    <insert id="insertOrUpdate" parameterType="com.example.diseasereport.model.UserInfo"
-            useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertOrUpdate" parameterType="com.example.diseasereport.model.UserInfo">
     insert into UserInfo (userId, schoolId,
       name, gender, age, department, phone,
       urgentPhone, isHKMT, isInternational

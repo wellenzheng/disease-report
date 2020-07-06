@@ -11,22 +11,23 @@
     delete from User
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" keyProperty="user.id"
-            parameterType="com.example.diseasereport.model.User" useGeneratedKeys="true">
+
+    <insert id="insert" parameterType="com.example.diseasereport.model.User">
         insert into `User` (email, password, role)
         values
         (#{user.email,jdbcType=VARCHAR},
         #{user.password,jdbcType=VARCHAR},
         #{user.role,jdbcType=VARCHAR})
     </insert>
-    <update id="updateById" parameterType="com.example.diseasereport.model.User"
-            useGeneratedKeys="true" keyProperty="user.id">
+
+    <update id="updateById" parameterType="com.example.diseasereport.model.User">
     update `User`
     set email = #{user.email,jdbcType=VARCHAR},
       password = #{user.password,jdbcType=VARCHAR},
       role = #{user.role,jdbcType=VARCHAR}
     where id = #{user.id,jdbcType=INTEGER}
   </update>
+
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, email, password, role
     from User

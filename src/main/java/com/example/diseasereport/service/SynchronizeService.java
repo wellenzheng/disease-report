@@ -40,7 +40,7 @@ public class SynchronizeService {
         Statistic currStatistic = getCurrStatistic();
         statisticMapper.insertOrUpdate(currStatistic);
         Statistic statistic = (Statistic) redisUtils.lRightPop("statistic:groupByDate");
-        if (!statistic.getUpdateDate().equals(currStatistic.getUpdateDate())) {
+        if (statistic != null && !statistic.getUpdateDate().equals(currStatistic.getUpdateDate())) {
             redisUtils.lRightPush("statistic:groupByDate", statistic);
         }
         redisUtils.lRightPush("statistic:groupByDate", currStatistic);
