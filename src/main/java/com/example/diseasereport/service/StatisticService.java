@@ -1,8 +1,6 @@
 package com.example.diseasereport.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.example.diseasereport.mapper.StatisticMapper;
 import com.example.diseasereport.model.Statistic;
 import com.example.diseasereport.utils.RedisUtils;
-import com.google.common.collect.Lists;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +28,9 @@ public class StatisticService {
 
     @Autowired
     private StatisticMapper statisticMapper;
+
+    @Autowired
+    private SynchronizeService synchronizeService;
 
     @Autowired
     private RedisUtils redisUtils;
@@ -59,26 +59,30 @@ public class StatisticService {
         return statisticList;
     }
 
-//    public Map<String, List<Statistic>> getAllGroupByArea() {
-//        Map<String, List<Statistic>> map = new HashMap<>();
-//        for (String area : areaList) {
-//            List<Object> objectList = redisUtils.lGet(area, 0, -1);
-//            map.put(area, RedisUtils.castList(objectList, Statistic.class));
-//        }
-//        List<Statistic> statisticList = statisticMapper.selectAll();
-//        for (Statistic statistic : statisticList) {
-//            if (!map.containsKey(statistic.getArea())) {
-//                map.put(statistic.getArea(), Lists.newArrayList(statistic));
-//            } else {
-//                List<Statistic> statistics = map.get(statistic.getArea());
-//                statistics.add(statistic);
-//                map.replace(statistic.getArea(), statistics);
-//            }
-//        }
-//        map.forEach(((area, statistics) -> {
-//            redisUtils.delete(area);
-//            redisUtils.lSet(area, statistics);
-//        }));
-//        return map;
-//    }
+    public Statistic getCurrStatistic() {
+        return synchronizeService.getCurrStatistic();
+    }
+
+    //    public Map<String, List<Statistic>> getAllGroupByArea() {
+    //        Map<String, List<Statistic>> map = new HashMap<>();
+    //        for (String area : areaList) {
+    //            List<Object> objectList = redisUtils.lGet(area, 0, -1);
+    //            map.put(area, RedisUtils.castList(objectList, Statistic.class));
+    //        }
+    //        List<Statistic> statisticList = statisticMapper.selectAll();
+    //        for (Statistic statistic : statisticList) {
+    //            if (!map.containsKey(statistic.getArea())) {
+    //                map.put(statistic.getArea(), Lists.newArrayList(statistic));
+    //            } else {
+    //                List<Statistic> statistics = map.get(statistic.getArea());
+    //                statistics.add(statistic);
+    //                map.replace(statistic.getArea(), statistics);
+    //            }
+    //        }
+    //        map.forEach(((area, statistics) -> {
+    //            redisUtils.delete(area);
+    //            redisUtils.lSet(area, statistics);
+    //        }));
+    //        return map;
+    //    }
 }

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import com.example.diseasereport.model.Cases;
 import com.example.diseasereport.response.CasesResponse;
+import com.example.diseasereport.response.GroupByAge;
+import com.example.diseasereport.response.GroupByGender;
+import com.example.diseasereport.response.GroupBySeverity;
 
 @Repository
 @Mapper
@@ -30,12 +33,9 @@ public interface CasesMapper {
 
     long countAll();
 
-    @MapKey("age")
-    Map<Integer, Integer> groupByAge();
+    List<GroupByAge> groupByAge();
 
-    @MapKey("gender")
-    Map<String, Integer> groupByGender();
+    List<GroupByGender> groupByGender();
 
-    @MapKey("severity")
-    Map<String, Integer> groupBySeverity();
+    List<GroupBySeverity> groupBySeverity();
 }

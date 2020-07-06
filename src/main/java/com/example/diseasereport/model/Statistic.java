@@ -24,11 +24,15 @@ public class Statistic {
 
     private Integer currAsy;
 
+    private Integer currSevere;
+
     private Integer newSuspect;
 
     private Integer newDiagnose;
 
     private Integer newDeath;
+
+    private Integer newCure;
 
     private String updateDate;
 }

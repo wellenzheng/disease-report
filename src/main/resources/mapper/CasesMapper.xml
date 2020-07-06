@@ -71,19 +71,19 @@
         from Cases
     </select>
 
-    <select id="groupByAge" resultType="java.util.HashMap">
+    <select id="groupByAge" resultType="com.example.diseasereport.response.GroupByAge">
         select age, count(*) as `count`
         from Cases left join UserInfo using(userId)
         group by age
     </select>
 
-    <select id="groupByGender" resultType="java.util.HashMap">
+    <select id="groupByGender" resultType="com.example.diseasereport.response.GroupByGender">
         select gender, count(*) as `count`
         from Cases left join UserInfo using(userId)
         group by gender
     </select>
 
-    <select id="groupBySeverity" resultType="java.util.HashMap">
+    <select id="groupBySeverity" resultType="com.example.diseasereport.response.GroupBySeverity">
         select severity, count(*) as `count`
         from Cases left join UserInfo using(userId)
         group by severity

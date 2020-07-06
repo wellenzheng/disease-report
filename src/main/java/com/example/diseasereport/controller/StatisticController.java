@@ -32,4 +32,10 @@ public class StatisticController {
     public CommonResponse<List<Statistic>> getGroupByDate() {
         return CommonResponse.success("获取每一天疫情汇总", statisticService.getAllGroupByDate());
     }
+
+    @GetMapping("getCurr")
+    @ApiOperation(value = "getCurrStatistic")
+    public CommonResponse<Statistic> getCurrStatistic() {
+        return CommonResponse.success("获取当天的统计数据", statisticService.getCurrStatistic());
+    }
 }

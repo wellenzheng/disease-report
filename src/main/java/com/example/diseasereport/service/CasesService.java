@@ -1,7 +1,6 @@
 package com.example.diseasereport.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,16 +38,12 @@ public class CasesService {
             if (cases.getStatus().equals("疑似")) {
                 redisUtils.incr("currSuspect", 1);
                 redisUtils.incr("newSuspect", 1);
-                if (cases.getSeverity().equals("无症状")) {
-                    redisUtils.incr("currAsy", 1);
-                }
+                severityJudge(cases.getSeverity());
             } else if (cases.getStatus().equals("确诊")) {
                 redisUtils.incr("totalDiagnose", 1);
                 redisUtils.incr("currDiagnose", 1);
                 redisUtils.incr("newDiagnose", 1);
-                if (cases.getSeverity().equals("无症状")) {
-                    redisUtils.incr("currAsy", 1);
-                }
+                severityJudge(cases.getSeverity());
             }
         }
         return i;
@@ -99,12 +94,10 @@ public class CasesService {
             redisUtils.incr("currDiagnose", 1);
             redisUtils.incr("newDiagnose", 1);
             redisUtils.decr("currSuspect", 1);
-            if (!c.getSeverity().equals("无症状") && cases.getSeverity().equals("无症状")) {
-                redisUtils.incr("currAsy", 1);
-            } else if (c.getSeverity().equals("无症状") && !cases.getSeverity().equals("无症状")) {
-                redisUtils.decr("currAsy", 1);
-            }
+            severityChange(c.getSeverity(), cases.getSeverity());
         } else if (c.getStatus().equals("确诊") && cases.getStatus().equals("治愈")) {
+            redisUtils.incr("totalCure", 1);
+            redisUtils.incr("newCure", 1);
             redisUtils.decr("currDiagnose", 1);
         } else if (c.getStatus().equals("确诊") && cases.getStatus().equals("死亡")) {
             redisUtils.decr("currDiagnose", 1);
@@ -125,5 +118,44 @@ public class CasesService {
                 .groupByGender(casesMapper.groupByGender())
                 .groupBySeverity(casesMapper.groupBySeverity())
                 .build();
+    }
+
+    private void severityJudge(String sev) {
+        if (sev == null) {
+            return;
+        }
+        if (sev.equals("无症状")) {
+            redisUtils.incr("currAsy", 1);
+        } else if (sev.equals("重症")) {
+            redisUtils.incr("currSevere", 1);
+        }
+    }
+
+    private void severityChange(String oldSev, String newSev) {
+        if (oldSev == null || newSev == null || oldSev.equals(newSev)) {
+            return;
+        }
+        if (newSev.equals("无症状")) {
+            redisUtils.incr("currAsy", 1);
+            if (oldSev.equals("重症")) {
+                redisUtils.decr("currSevere", 1);
+            }
+        } else if (oldSev.equals("无症状")) {
+            redisUtils.decr("currAsy", 1);
+            if (newSev.equals("重症")) {
+                redisUtils.incr("currSevere", 1);
+            }
+        }
+        if (newSev.equals("重症")) {
+            redisUtils.incr("currSevere", 1);
+            if (oldSev.equals("无症状")) {
+                redisUtils.decr("currAsy", 1);
+            }
+        } else if (oldSev.equals("重症")) {
+            redisUtils.decr("currSevere", 1);
+            if (newSev.equals("无症状")) {
+                redisUtils.incr("currAsy", 1);
+            }
+        }
     }
 }

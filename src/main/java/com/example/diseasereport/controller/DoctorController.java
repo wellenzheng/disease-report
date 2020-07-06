@@ -13,6 +13,7 @@ import com.example.diseasereport.common.CommonResponse;
 import com.example.diseasereport.model.Doctor;
 import com.example.diseasereport.response.InfoAndHealth;
 import com.example.diseasereport.service.DoctorService;
+import com.example.diseasereport.service.SynchronizeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +32,9 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
 
+    @Autowired
+    private SynchronizeService synchronizeService;
+
     @GetMapping("/get")
     @ApiOperation(value = "getDoctorInfo")
     public CommonResponse<Doctor> getDoctorInfo(
@@ -44,5 +48,13 @@ public class DoctorController {
     @ApiOperation(value = "getAllInfoAndHealth")
     public CommonResponse<List<InfoAndHealth>> getAllInfoAndHealth() {
         return CommonResponse.success("获取所有用户信息和健康表", doctorService.getAllInfoAndHealth());
+    }
+
+    @GetMapping("/synchronize")
+    @PreAuthorize("hasAnyAuthority('DOCTOR')")
+    @ApiOperation(value = "synchronize")
+    public CommonResponse<String> synchronize() {
+        synchronizeService.synchronize();
+        return CommonResponse.success("同步统计数据", "同步成功");
     }
 }

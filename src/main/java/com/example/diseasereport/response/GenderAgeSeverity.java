@@ -1,6 +1,6 @@
 package com.example.diseasereport.response;
 
-import java.util.Map;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,9 +17,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GenderAgeSeverity {
-    private Map<Integer, Integer> groupByAge;
+    private List<GroupByAge> groupByAge;
 
-    private Map<String, Integer> groupByGender;
+    private List<GroupByGender> groupByGender;
 
-    private Map<String, Integer> groupBySeverity;
+    private List<GroupBySeverity> groupBySeverity;
 }
