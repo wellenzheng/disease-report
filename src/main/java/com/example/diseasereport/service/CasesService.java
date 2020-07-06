@@ -38,7 +38,7 @@ public class CasesService {
         if (i != 0) {
             CasesResponse casesResponse = casesMapper.selectByUserId(cases.getUserId());
             redisUtils.set(prefix + cases.getUserId(), casesResponse);
-            redisUtils.lRightPush(prefix + "all", cases);
+            redisUtils.lRightPush(prefix + "all", casesResponse);
             if (cases.getStatus().equals("疑似")) {
                 redisUtils.incr("currSuspect", 1);
                 redisUtils.incr("newSuspect", 1);
