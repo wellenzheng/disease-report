@@ -37,11 +37,13 @@
     <select id="selectAll" resultType="com.example.diseasereport.response.CasesResponse">
     select
        c.id          as casesId,
+       ui.userId     as userId,
        ui.name       as username,
        ui.schoolId   as schoolId,
        ui.gender     as gender,
        ui.age        as age,
        ui.department as department,
+       d.userId      as doctorId,
        d.name        as doctorName,
        d.phone       as doctorPhone,
        c.status      as status,
@@ -55,11 +57,13 @@
     <select id="selectByUserId" resultType="com.example.diseasereport.response.CasesResponse">
         select
            c.id          as casesId,
+           ui.userId     as userId,
            ui.name       as username,
            ui.schoolId   as schoolId,
            ui.gender     as gender,
            ui.age        as age,
            ui.department as department,
+           d.userId      as doctorId,
            d.name        as doctorName,
            d.phone       as doctorPhone,
            c.status      as status,
