@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.diseasereport.model.Cases;
+import com.example.diseasereport.response.CasesResponse;
 
 @Repository
 @Mapper
@@ -19,7 +20,7 @@ public interface CasesMapper {
 
     Cases selectById(Integer id);
 
-    List<Cases> selectAll();
+    List<CasesResponse> selectAll();
 
     int updateById(Cases record);
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.diseasereport.common.CommonIdResponse;
 import com.example.diseasereport.common.CommonResponse;
 import com.example.diseasereport.model.Cases;
+import com.example.diseasereport.response.CasesResponse;
 import com.example.diseasereport.response.GenderAgeSeverity;
 import com.example.diseasereport.service.CasesService;
 
@@ -45,7 +46,7 @@ public class CasesController {
     @GetMapping("/getAll")
     @PreAuthorize("hasAnyAuthority('DOCTOR')")
     @ApiOperation(value = "getAllCases")
-    public CommonResponse<List<Cases>> getAllCases() {
+    public CommonResponse<List<CasesResponse>> getAllCases() {
         return CommonResponse.success("获取所有病例", casesService.getAll());
     }
 

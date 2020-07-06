@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.diseasereport.mapper.CasesMapper;
 import com.example.diseasereport.model.Cases;
+import com.example.diseasereport.response.CasesResponse;
 import com.example.diseasereport.response.GenderAgeSeverity;
 import com.example.diseasereport.utils.RedisUtils;
 
@@ -68,21 +69,21 @@ public class CasesService {
         return c;
     }
 
-    public List<Cases> getAll() {
+    public List<CasesResponse> getAll() {
         Long size = redisUtils.lGetListSize(prefix + "all");
         Long countAll = casesMapper.countAll();
         if (size.equals(countAll)) {
             List<Object> objectList = redisUtils.lGet(prefix + "all", 0, -1);
             if (objectList != null && objectList.size() != 0) {
-                return RedisUtils.castList(objectList, Cases.class);
+                return RedisUtils.castList(objectList, CasesResponse.class);
             }
         }
-        List<Cases> casesList = casesMapper.selectAll();
-        if (casesList != null && casesList.size() != 0) {
+        List<CasesResponse> casesResponseList = casesMapper.selectAll();
+        if (casesResponseList != null && casesResponseList.size() != 0) {
             redisUtils.delete(prefix + "all");
-            redisUtils.lSetAll(prefix + "all", casesList.toArray());
+            redisUtils.lSetAll(prefix + "all", casesResponseList.toArray());
         }
-        return casesList;
+        return casesResponseList;
     }
 
     public Integer editByUserId(Cases cases) {
@@ -90,6 +91,9 @@ public class CasesService {
             return null;
         }
         Cases c = casesMapper.selectByUserId(cases.getUserId());
+        if (c == null) {
+            return null;
+        }
         if (c.getStatus().equals("疑似") && cases.getStatus().equals("确诊")) {
             redisUtils.incr("totalDiagnose", 1);
             redisUtils.incr("currDiagnose", 1);

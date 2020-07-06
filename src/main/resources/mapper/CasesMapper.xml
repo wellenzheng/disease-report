@@ -34,9 +34,20 @@
     from Cases
     where id = #{id,jdbcType=INTEGER}
   </select>
-    <select id="selectAll" resultMap="BaseResultMap">
-    select id, userId, doctorId, status, severity, updateTime
-    from Cases
+    <select id="selectAll" resultType="com.example.diseasereport.response.CasesResponse">
+    select ui.name       as username,
+       ui.schoolId   as schoolId,
+       ui.gender     as gender,
+       ui.age        as age,
+       ui.department as department,
+       d.name        as doctorName,
+       d.phone       as doctorPhone,
+       c.status      as status,
+       c.severity    as severity,
+       c.updateTime  as updateTime
+    from Cases c
+         left join Doctor d on c.doctorId = d.userId
+         left join UserInfo ui on c.userId = ui.userId
   </select>
     <select id="selectByUserId" resultType="com.example.diseasereport.model.Cases">
         select *
@@ -72,7 +83,7 @@
         group by gender
     </select>
 
-    <select id="groupBySeverity">
+    <select id="groupBySeverity" resultType="java.util.HashMap">
         select severity, count(*) as `count`
         from Cases left join UserInfo using(userId)
         group by severity

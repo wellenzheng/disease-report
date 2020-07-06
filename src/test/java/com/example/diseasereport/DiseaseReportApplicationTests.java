@@ -41,12 +41,13 @@ class DiseaseReportApplicationTests {
     }
 
     @Test
-    void test(){
-        System.out.println(casesMapper.groupByAge());
+    void test() {
+        System.out.println(casesMapper.groupBySeverity());
     }
 
     @Test
     void redisTest() {
+        redisUtils.delete("cases:all");
         //        List<Integer> list = new ArrayList<>();
         //        for (int i = 0; i < 10; i++) {
         //            list.add(i);
