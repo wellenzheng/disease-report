@@ -42,7 +42,7 @@ public class StatisticService {
         }
         List<Statistic> statisticList = statisticMapper.selectAll();
         if (statisticList != null && statisticList.size() != 0) {
-            redisUtils.lSetAll("allStatistics", statisticList.toArray());
+            redisUtils.lRightPushAll(prefix + "all", statisticList.toArray());
         }
         return statisticList;
     }
@@ -54,9 +54,9 @@ public class StatisticService {
         }
         List<Statistic> statisticList = statisticMapper.selectGroupByDate();
         if (statisticList != null && statisticList.size() != 0) {
-            redisUtils.lSetAll(prefix + "groupByDate", statisticList.toArray());
+            redisUtils.lRightPushAll(prefix + "groupByDate", statisticList.toArray());
         }
-        return statisticList;
+        return statisticList == null || statisticList.size() == 0 ? null : statisticList;
     }
 
     public Statistic getCurrStatistic() {

@@ -21,14 +21,27 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-    <insert id="insert" parameterType="com.example.diseasereport.model.Statistic">
-    insert into Statistic (id, totalDiagnose, totalDeath, 
+    <insert id="insertOrUpdate" parameterType="com.example.diseasereport.model.Statistic">
+    insert into Statistic (totalDiagnose, totalDeath,
       totalCure, currDiagnose, currSuspect, currAsy, currSevere,
       newSuspect, newDiagnose, newDeath, newCure, updateDate)
-    values (#{id,jdbcType=INTEGER}, #{totalDiagnose,jdbcType=INTEGER}, #{totalDeath,jdbcType=INTEGER}, 
+    values (#{totalDiagnose,jdbcType=INTEGER}, #{totalDeath,jdbcType=INTEGER},
       #{totalCure,jdbcType=INTEGER}, #{currDiagnose,jdbcType=INTEGER}, #{currSuspect,jdbcType=INTEGER}, 
       #{currAsy,jdbcType=INTEGER}, #{currSevere,jdbcType=INTEGER}, #{newSuspect,jdbcType=INTEGER},
       #{newDiagnose,jdbcType=INTEGER}, #{newDeath,jdbcType=INTEGER}, #{newCure,jdbcType=INTEGER}, #{updateDate,jdbcType=VARCHAR})
+    on duplicate key update
+      totalDiagnose = #{totalDiagnose,jdbcType=INTEGER},
+      totalDeath = #{totalDeath,jdbcType=INTEGER},
+      totalCure = #{totalCure,jdbcType=INTEGER},
+      currDiagnose = #{currDiagnose,jdbcType=INTEGER},
+      currSuspect = #{currSuspect,jdbcType=INTEGER},
+      currAsy = #{currAsy,jdbcType=INTEGER},
+      currSevere = #{currSevere,jdbcType=INTEGER},
+      newSuspect = #{newSuspect,jdbcType=INTEGER},
+      newDiagnose = #{newDiagnose,jdbcType=INTEGER},
+      newDeath = #{newDeath,jdbcType=INTEGER},
+      newCure = #{newCure,jdbcType=INTEGER},
+      updateDate = #{updateDate,jdbcType=VARCHAR}
   </insert>
 
     <update id="updateById" parameterType="com.example.diseasereport.model.Statistic">

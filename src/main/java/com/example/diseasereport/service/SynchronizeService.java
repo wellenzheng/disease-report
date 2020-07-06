@@ -38,8 +38,12 @@ public class SynchronizeService {
     @Scheduled(cron = "0 59 23 * * ?")
     public void synchronize() {
         Statistic currStatistic = getCurrStatistic();
-        statisticMapper.insert(currStatistic);
-        redisUtils.lSet("statistic:groupByDate", currStatistic);
+        statisticMapper.insertOrUpdate(currStatistic);
+        Statistic statistic = (Statistic) redisUtils.lRightPop("statistic:groupByDate");
+        if (!statistic.getUpdateDate().equals(currStatistic.getUpdateDate())) {
+            redisUtils.lRightPush("statistic:groupByDate", statistic);
+        }
+        redisUtils.lRightPush("statistic:groupByDate", currStatistic);
         redisUtils.delete("newSuspect", "newDiagnose", "newDeath", "newCure");
     }
 

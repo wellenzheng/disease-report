@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.diseasereport.model.UserInfo;
+import com.example.diseasereport.response.InfoAndHealth;
 
 @Repository
 @Mapper
@@ -24,6 +25,8 @@ public interface UserInfoMapper {
     int insertOrUpdate(UserInfo userInfo);
 
     UserInfo selectByUserId(@Param("userId") Integer userId);
+
+    InfoAndHealth selectInfoAndHealth(@Param("userId") Integer userId);
 
     long countAll();
 

@@ -134,13 +134,6 @@ public class RedisUtils {
         }
     }
 
-    /**
-     * 获取list缓存的内容
-     *
-     * @param key 键
-     * @param start 开始
-     * @param end 结束 0 到 -1代表所有值
-     */
     public List<Object> lGet(String key, long start, long end) {
         try {
             return redisTemplate.opsForList().range(key, start, end);
@@ -150,11 +143,6 @@ public class RedisUtils {
         }
     }
 
-    /**
-     * 获取list缓存的长度
-     *
-     * @param key 键
-     */
     public Long lGetListSize(String key) {
         try {
             return redisTemplate.opsForList().size(key);
@@ -164,12 +152,6 @@ public class RedisUtils {
         }
     }
 
-    /**
-     * 通过索引 获取list中的值
-     *
-     * @param key 键
-     * @param index 索引 index>=0时， 0 表头，1 第二个元素，依次类推；index<0时，-1，表尾，-2倒数第二个元素，依次类推
-     */
     public Object lGetIndex(String key, long index) {
         try {
             return redisTemplate.opsForList().index(key, index);
@@ -179,13 +161,7 @@ public class RedisUtils {
         }
     }
 
-    /**
-     * 将object放入缓存
-     *
-     * @param key 键
-     * @param value 值
-     */
-    public Boolean lSet(String key, Object value) {
+    public Boolean lRightPush(String key, Object value) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
             return true;
@@ -195,14 +171,7 @@ public class RedisUtils {
         }
     }
 
-    /**
-     * 将object入缓存
-     *
-     * @param key 键
-     * @param value 值
-     * @param time 时间(秒)
-     */
-    public Boolean lSet(String key, Object value, long time) {
+    public Boolean lRightPush(String key, Object value, long time) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
             if (time > 0) {
@@ -215,13 +184,7 @@ public class RedisUtils {
         }
     }
 
-    /**
-     * 将list放入缓存
-     *
-     * @param key 键
-     * @param value 值
-     */
-    public Boolean lSetAll(String key, Object... value) {
+    public Boolean lRightPushAll(String key, Object... value) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             return true;
@@ -231,14 +194,7 @@ public class RedisUtils {
         }
     }
 
-    /**
-     * 将list放入缓存
-     *
-     * @param key 键
-     * @param value 值
-     * @param time 时间(秒)
-     */
-    public Boolean lSetAll(String key, long time, Object... value) {
+    public Boolean lRightPushAll(String key, long time, Object... value) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             if (time > 0) {
@@ -251,13 +207,6 @@ public class RedisUtils {
         }
     }
 
-    /**
-     * 根据索引修改list中的某条数据
-     *
-     * @param key 键
-     * @param index 索引
-     * @param value 值
-     */
     public Boolean lUpdateIndex(String key, long index, Object value) {
         try {
             redisTemplate.opsForList().set(key, index, value);
@@ -268,14 +217,15 @@ public class RedisUtils {
         }
     }
 
-    /**
-     * 移除N个值为value
-     *
-     * @param key 键
-     * @param count 移除多少个
-     * @param value 值
-     * @return 移除的个数
-     */
+    public Object lRightPop(String key) {
+        try {
+            return redisTemplate.opsForList().rightPop(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Long lRemove(String key, long count, Object value) {
         try {
             return redisTemplate.opsForList().remove(key, count, value);

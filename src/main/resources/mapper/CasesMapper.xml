@@ -35,7 +35,9 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
     <select id="selectAll" resultType="com.example.diseasereport.response.CasesResponse">
-    select ui.name       as username,
+    select
+       c.id          as casesId,
+       ui.name       as username,
        ui.schoolId   as schoolId,
        ui.gender     as gender,
        ui.age        as age,
@@ -48,6 +50,7 @@
     from Cases c
          left join Doctor d on c.doctorId = d.userId
          left join UserInfo ui on c.userId = ui.userId
+    order by c.id
   </select>
     <select id="selectByUserId" resultType="com.example.diseasereport.model.Cases">
         select *

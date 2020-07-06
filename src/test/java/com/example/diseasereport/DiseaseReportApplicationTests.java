@@ -61,7 +61,6 @@ class DiseaseReportApplicationTests {
 
     @Test
     void redisTest() {
-        System.out.println(DateFormatUtils.getDate(new Date()));
     }
 
 }

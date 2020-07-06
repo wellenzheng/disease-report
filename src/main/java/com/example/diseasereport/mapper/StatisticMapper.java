@@ -12,7 +12,7 @@ import com.example.diseasereport.model.Statistic;
 public interface StatisticMapper {
     int deleteById(Integer id);
 
-    int insert(Statistic record);
+    int insertOrUpdate(Statistic record);
 
     Statistic selectById(Integer id);
 

@@ -34,7 +34,7 @@ public class CasesService {
         int i = casesMapper.insert(cases);
         if (i != 0) {
             redisUtils.set(prefix + cases.getUserId(), cases);
-            redisUtils.lSet(prefix + "all", cases);
+            redisUtils.lRightPush(prefix + "all", cases);
             if (cases.getStatus().equals("疑似")) {
                 redisUtils.incr("currSuspect", 1);
                 redisUtils.incr("newSuspect", 1);
@@ -49,19 +49,19 @@ public class CasesService {
         return i;
     }
 
-    public Cases getByUserId(Integer userId) {
+    public CasesResponse getByUserId(Integer userId) {
         if (userId == null || userId <= 0) {
             return null;
         }
-        Cases cases = (Cases) redisUtils.get(prefix + userId);
-        if (cases != null) {
-            return cases;
+        CasesResponse casesResponse = (CasesResponse) redisUtils.get(prefix + userId);
+        if (casesResponse != null) {
+            return casesResponse;
         }
-        Cases c = casesMapper.selectByUserId(userId);
-        if (c != null) {
-            redisUtils.set(prefix + c.getUserId(), c);
+        CasesResponse response = casesMapper.selectByUserId(userId);
+        if (response != null) {
+            redisUtils.set(prefix + response.getCasesId(), response);
         }
-        return c;
+        return response;
     }
 
     public List<CasesResponse> getAll() {
@@ -76,7 +76,7 @@ public class CasesService {
         List<CasesResponse> casesResponseList = casesMapper.selectAll();
         if (casesResponseList != null && casesResponseList.size() != 0) {
             redisUtils.delete(prefix + "all");
-            redisUtils.lSetAll(prefix + "all", casesResponseList.toArray());
+            redisUtils.lRightPushAll(prefix + "all", casesResponseList.toArray());
         }
         return casesResponseList;
     }
@@ -85,7 +85,7 @@ public class CasesService {
         if (cases == null || cases.getUserId() == null) {
             return null;
         }
-        Cases c = casesMapper.selectByUserId(cases.getUserId());
+        CasesResponse c = casesMapper.selectByUserId(cases.getUserId());
         if (c == null) {
             return null;
         }
@@ -105,9 +105,10 @@ public class CasesService {
             redisUtils.incr("newDeath", 1);
         }
         int i = casesMapper.updateByUserId(cases.getUserId());
+        CasesResponse casesResponse = casesMapper.selectByUserId(cases.getUserId());
         if (i != 0) {
             redisUtils.set(prefix + cases.getUserId(), cases);
-            redisUtils.lUpdateIndex(prefix + "all", c.getId(), cases);
+            redisUtils.lUpdateIndex(prefix + "all", casesResponse.getCasesId(), casesResponse);
         }
         return i;
     }

@@ -47,7 +47,7 @@ public class DoctorService {
         List<InfoAndHealth> infoAndHealthList = doctorMapper.selectAllInfoAndHealth();
         if (infoAndHealthList != null && infoAndHealthList.size() != 0) {
             redisUtils.delete("infoAndHealth");
-            redisUtils.lSetAll("infoAndHealth", infoAndHealthList.toArray());
+            redisUtils.lRightPushAll("infoAndHealth", infoAndHealthList.toArray());
         }
         return infoAndHealthList;
     }

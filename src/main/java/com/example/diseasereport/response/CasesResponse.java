@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CasesResponse {
+    @ApiModelProperty("病例id")
+    private Integer casesId;
+
     @ApiModelProperty("用户姓名")
     private String username;
 

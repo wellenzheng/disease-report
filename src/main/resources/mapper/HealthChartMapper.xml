@@ -38,10 +38,10 @@
     isAbroadIn14=#{isAbroadIn14,jdbcType=VARCHAR},
     isConRiskAbrIn14=#{isConRiskAbrIn14,jdbcType=VARCHAR},
     details=#{details,jdbcType=LONGVARCHAR},
-    reportDate=#{reportDate,jdbcType=VARCHAR};
+    reportDate=#{reportDate,jdbcType=VARCHAR}
   </insert>
     <update id="updateAutoIncr">
-        alter table HealthChart auto_increment=0;
+        alter table HealthChart auto_increment=0
     </update>
 
     <update id="updateById" parameterType="com.example.diseasereport.model.HealthChart">

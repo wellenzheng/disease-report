@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.diseasereport.mapper.UserInfoMapper;
 import com.example.diseasereport.model.UserInfo;
+import com.example.diseasereport.response.InfoAndHealth;
 import com.example.diseasereport.utils.RedisUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,11 @@ public class UserInfoService {
         int integer = userInfoMapper.insertOrUpdate(userInfo);
         userInfoMapper.updateAutoIncr();
         if (integer != 0) {
+            InfoAndHealth infoAndHealth = userInfoMapper.selectInfoAndHealth(userInfo.getUserId());
             redisUtils.set(prefix + userInfo.getUserId(), userInfo);
+            if (redisUtils.hasKey("infoAndHealth")) {
+                redisUtils.lUpdateIndex("infoAndHealth", userInfo.getUserId(), infoAndHealth);
+            }
         }
         return integer;
     }

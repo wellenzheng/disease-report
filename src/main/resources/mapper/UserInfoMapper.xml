@@ -67,7 +67,6 @@
       urgentPhone = #{urgentPhone,jdbcType=VARCHAR},
       isHKMT = #{isHKMT,jdbcType=VARCHAR},
       isInternational = #{isInternational,jdbcType=VARCHAR};
-     alter table UserInfo auto_increment=0;
   </insert>
 
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -91,4 +90,15 @@
         select count(id) as total
         from UserInfo
     </select>
+
+    <select id="selectInfoAndHealth" parameterType="java.lang.Integer"
+            resultType="com.example.diseasereport.response.InfoAndHealth">
+        select info.*, chart.*
+        from UserInfo info left join HealthChart chart on info.userId=chart.userId
+        where info.userId=#{userId}
+    </select>
+
+    <update id="updateAutoIncr">
+        alter table UserInfo auto_increment = 0
+    </update>
 </mapper>

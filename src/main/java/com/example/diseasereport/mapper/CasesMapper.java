@@ -27,7 +27,7 @@ public interface CasesMapper {
 
     int updateById(Cases record);
 
-    Cases selectByUserId(@Param("userId") Integer userId);
+    CasesResponse selectByUserId(@Param("userId") Integer userId);
 
     int updateByUserId(Integer userId);
 

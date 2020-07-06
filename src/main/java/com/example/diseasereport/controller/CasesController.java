@@ -52,7 +52,7 @@ public class CasesController {
 
     @GetMapping("/get")
     @ApiOperation(value = "getByUserId")
-    public CommonResponse<Cases> getByUserId(Integer userId) {
+    public CommonResponse<CasesResponse> getByUserId(Integer userId) {
         return CommonResponse.success("获取个人病例", casesService.getByUserId(userId));
     }
 
