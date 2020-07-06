@@ -75,9 +75,10 @@
     </select>
 
     <select id="groupByAge" resultType="com.example.diseasereport.response.GroupByAge">
-        select age, count(*) as `count`
-        from Cases left join UserInfo using(userId)
-        group by age
+        select ui.age, count(*) as `count`
+        from Cases c left join UserInfo ui using(userId)
+        group by ui.age
+        order by ui.age
     </select>
 
     <select id="groupByGender" resultType="com.example.diseasereport.response.GroupByGender">
