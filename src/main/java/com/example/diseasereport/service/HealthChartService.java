@@ -37,7 +37,7 @@ public class HealthChartService {
             redisUtils.set(prefix + healthChart.getUserId(), healthChart);
             InfoAndHealth infoAndHealth = userInfoMapper.selectInfoAndHealth(healthChart.getUserId());
             if (redisUtils.hasKey("infoAndHealth")) {
-                redisUtils.lUpdateIndex("infoAndHealth", healthChart.getUserId(), infoAndHealth);
+                redisUtils.lUpdateIndex("infoAndHealth", healthChart.getUserId() - 2, infoAndHealth);
             }
         }
         healthChartMapper.updateAutoIncr();

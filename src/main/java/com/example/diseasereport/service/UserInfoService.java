@@ -34,7 +34,7 @@ public class UserInfoService {
             InfoAndHealth infoAndHealth = userInfoMapper.selectInfoAndHealth(userInfo.getUserId());
             redisUtils.set(prefix + userInfo.getUserId(), userInfo);
             if (redisUtils.hasKey("infoAndHealth")) {
-                redisUtils.lUpdateIndex("infoAndHealth", userInfo.getUserId(), infoAndHealth);
+                redisUtils.lUpdateIndex("infoAndHealth", userInfo.getUserId() - 2, infoAndHealth);
             }
         }
         return integer;
