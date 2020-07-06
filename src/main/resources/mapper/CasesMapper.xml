@@ -67,13 +67,13 @@
     </select>
 
     <select id="groupByGender" resultType="java.util.HashMap">
-        select gender, count(id) as `count`
+        select gender, count(*) as `count`
         from Cases left join UserInfo using(userId)
         group by gender
     </select>
 
     <select id="groupBySeverity">
-        select severity, count(id) as `count`
+        select severity, count(*) as `count`
         from Cases left join UserInfo using(userId)
         group by severity
     </select>
