@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Main-Class: com.example.diseasereport.DiseaseReportApplication
+Class-Path: /Users/wellenzheng/IdeaProjects/disease-report/src/main/java
+ /com/example/diseasereport/DiseaseReportApplication.java
+
